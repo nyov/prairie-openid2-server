@@ -1,8 +1,8 @@
 # This file is part of Prairie
 # 
-# Copyright (C) 2012 Grischa Brockhaus
-# http:#blog.brockha.us/
-# openid-info@brockha.us
+# Copyright (C) 2003-2008 Barnraiser
+# http:#www.barnraiser.org/
+# info@barnraiser.org
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,22 +18,15 @@
 # along with this program; see the file COPYING.txt.  If not, see
 # <http:#www.gnu.org/licenses/>
 
+# Remark (Grischa Brockhaus):
+# This is the original .htaccess file. 
+# It doesn't work on servers doing a name=>name.php rewrite
+# (like all-inkl.com does!) >.<
+# My .htaccess file does work for this kind of servers, too.
 
 Options +FollowSymLinks
 IndexIgnore */*
 RewriteEngine On
-RewriteBase /
-
-# Exclude some stuff from rewriting. These files should be opened directly
-RewriteRule \.(css|js|png|gif|jpg|htm|html)$ - [L]
-RewriteRule ^install/installer.php$ - [L]
-RewriteRule ^upload_file.php$ - [L]
-RewriteRule ^get_file.php$ - [L]
-
-# If a file is requested, that is not existing, redirect to index.php
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !-f
-RewriteCond %{REQUEST_URI} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php
-
