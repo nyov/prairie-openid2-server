@@ -89,7 +89,8 @@ else {
 			else {
 				$mime_type = $_FILES['frm_file']['type'];
 			}
-	
+	        $mime_type = fix_extended_mimetype($mime_type);
+
 			// We use this to map IE-mimetype to standard mimetype
 			$mime_map = array(array("from" => "image/pjpeg", "to" => "image/jpeg"));
 	
@@ -140,6 +141,13 @@ else {
 			}
 		}
 	}
+}
+
+// Fix for mimetypes like that: image/png; charset=binary
+function fix_extended_mimetype(&$mime_type) {
+    $split = explode(";", $mime_type, 2);
+    $mime_type=$split[0];
+    return $mime_type;
 }
 
 function validateMimeType($mimes, $mime_type) {
