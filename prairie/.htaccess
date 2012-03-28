@@ -22,10 +22,15 @@
 Options +FollowSymLinks
 IndexIgnore */*
 RewriteEngine On
-#RewriteBase /
+RewriteBase /
 
-RewriteRule \.(css|js|png)$ - [L]
+# Exclude some stuff from rewriting. These files should be opened directly
+RewriteRule \.(css|js|png|gif|jpg|htm|html)$ - [L]
+RewriteRule ^install/installer.php$ - [L]
+RewriteRule ^upload_file.php$ - [L]
+RewriteRule ^get_file.php$ - [L]
 
+# If a file is requested, that is not existing, redirect to index.php
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !-f
