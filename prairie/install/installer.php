@@ -479,11 +479,24 @@ else { // pre-start checks and setup
 	// Check Config file is writeable
 	if (!is_writable("../config/core.config.php")) {
 		$system_check['is_valid'] = 0;
-		$system_check['result'] = _("PHP cannot write to the config file. Please check your permissions.");
+		$system_check['result'] = _("PHP cannot write to the config file (config/core.config.php). Please check your permissions.");
 		$is_error = 1;
 	}
 	else {
 		$system_check['result'] = _("The config file is writeable.");
+		$system_check['is_valid'] = 1;
+	}
+	
+	array_push($system_checks, $system_check);
+
+	// Check avatars directory is writeable
+	if (!is_writable("../asset/avatars")) {
+		$system_check['is_valid'] = 0;
+		$system_check['result'] = _("PHP cannot write to the asset/avatar directory. Please check your permissions.");
+		$is_error = 1;
+	}
+	else {
+		$system_check['result'] = _("The asset/avatar directory file is writeable.");
 		$system_check['is_valid'] = 1;
 	}
 	
