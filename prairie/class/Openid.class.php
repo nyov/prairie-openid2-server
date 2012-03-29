@@ -316,7 +316,7 @@ class OpenidServer {
 		return 1;
 	}
 	
-	function sreg_extention ($datax=array()) {
+	function sreg_extention (&$datax=array()) {
 		$sregflt = false; 
 		$fieldswanted = Array (); 
 	//	$this->_debug(); 
@@ -500,7 +500,7 @@ class OpenidServer {
 				$data_to_send['openid.assoc_handle'] = $this->assoc_handle();
 			}
 			
-			$this->sreg_extention (&$data_to_send);
+			$this->sreg_extention ($data_to_send);
 			
 			$signed = '';
 			foreach($data_to_send as $key => $v) {
