@@ -1,0 +1,2 @@
+This is only a dummy file in order to have the avatars directory in the deployment archive.
+You can safely delete it after you've finished the installation.

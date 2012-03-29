@@ -492,7 +492,7 @@ else { // pre-start checks and setup
 	// Check avatars directory is writeable
 	if (!is_writable("../asset/avatars")) {
 		$system_check['is_valid'] = 0;
-		$system_check['result'] = _("PHP cannot write to the asset/avatar directory. Please check your permissions.");
+		$system_check['result'] = _("PHP cannot write to the asset/avatars directory. Please check your permissions.");
 		$is_error = 1;
 	}
 	else {
