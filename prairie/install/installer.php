@@ -496,7 +496,7 @@ else { // pre-start checks and setup
 		$is_error = 1;
 	}
 	else {
-		$system_check['result'] = _("The asset/avatar directory file is writeable.");
+		$system_check['result'] = _("The asset/avatars directory file is writeable.");
 		$system_check['is_valid'] = 1;
 	}
 	
