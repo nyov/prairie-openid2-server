@@ -2,21 +2,21 @@
 
 // -----------------------------------------------------------------------
 // This file is part of Prairie
-// 
+//
 // Copyright (C) 2003-2008 Barnraiser
 // http://www.barnraiser.org/
 // info@barnraiser.org
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; see the file COPYING.txt.  If not, see
 // <http://www.gnu.org/licenses/>
@@ -27,13 +27,13 @@
 require_once('class/Openid.class.php');
 
 $server = new OpenidServer($db, $core_config['security']['openid_encryption_level']);
-//$server->_debug(); 
-$opneIDtrust = GetFromURL("trust"); 
-$openIDtrustroot = GetFromURL("openid_trust_root"); 
-$openIDrealm = GetFromURL("openid_realm"); 
-$openIDreturnTo = GetFromURL("openid_return_to"); 
-$openIDMode = GetFromURL("openid_mode"); 
-	
+//$server->_debug();
+$opneIDtrust = GetFromURL("trust");
+$openIDtrustroot = GetFromURL("openid_trust_root");
+$openIDrealm = GetFromURL("openid_realm");
+$openIDreturnTo = GetFromURL("openid_return_to");
+$openIDMode = GetFromURL("openid_mode");
+
 if (isset($_POST['trust'])) {
 
 	if ($openIDtrustroot) {
@@ -49,11 +49,12 @@ if (isset($_POST['trust'])) {
 	$query = "
 		SELECT trust_id
 		FROM " . $db->prefix . "_trust
-		WHERE trust_url=" . $db->qstr($trust_url)
+		WHERE trust_url=" . $db->qstr($trust_url) . "
+		AND user_id=" . $_SESSION['user_id']
 	;
-	
+
 	$result = $db->Execute($query);
-	
+
 	if (empty($result)) {
 		$rec = array();
 
@@ -61,20 +62,21 @@ if (isset($_POST['trust'])) {
 		$rec['trust_url'] = $trust_url;
 		$rec['trust_total'] = 1;
 		$rec['trust_last_visit'] = time();
-		
+
 		$table = $db->prefix . '_trust';
-		
+
 		$db->insertDB($rec, $table);
 
 	}
 	else {
 		$query = "
 			UPDATE " . $db->prefix . "_trust
-			SET trust_total=trust_total+1, 
+			SET trust_total=trust_total+1,
 			trust_last_visit=NOW()
-			WHERE trust_id=" . $result[0]['trust_id']
+			WHERE trust_id=" . $result[0]['trust_id'] . "
+			AND user_id=" . $_SESSION['user_id']
 		;
-		
+
 		$db->Execute($query);
 	}
 }
@@ -96,11 +98,12 @@ else {
 	$query = "
 		SELECT *
 		FROM " . $db->prefix . "_trust
-		WHERE trust_url=" . $db->qstr($trust_url)
+		WHERE trust_url=" . $db->qstr($trust_url) . "
+		AND user_id=" . $_SESSION['user_id']
 	;
-	
+
 	$result = $db->Execute($query);
-	
+
 	if (empty($result)) {
 		$body->set('trust_url', $trust_url);
 	}
@@ -110,7 +113,7 @@ else {
 }
 
 if ($openIDMode) {
-	$openid_mode = $openIDMode; 
+	$openid_mode = $openIDMode;
 }
 
 
