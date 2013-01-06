@@ -1,0 +1,6 @@
+# Prairie .gitignore
+
+# Ignore Eclipse project files
+/.project
+/.buildpath
+/.settings/
