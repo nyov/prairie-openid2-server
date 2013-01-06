@@ -1,8 +1,8 @@
 # This file is part of Prairie
 # 
-# Copyright (C) 2003-2008 Barnraiser
-# http:#www.barnraiser.org/
-# info@barnraiser.org
+# Copyright (C) 2012 Grischa Brockhaus
+# http:#blog.brockha.us
+# prairie@brockha.us
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,12 +18,23 @@
 # along with this program; see the file COPYING.txt.  If not, see
 # <http:#www.gnu.org/licenses/>
 
-# Remark (Grischa Brockhaus): switched off MultiViews doing autocompletion for name => name.php
+# Remark (Grischa Brockhaus):
+# This htaccess file should work, if your provider has Multiviews enabled
+# (you'll see PHP errors when loading /login) but denies to add Options
+# to your htaccess file.
 
-Options +FollowSymLinks
-Options -Multiviews
 IndexIgnore */*
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteBase /
+
+# Exclude some stuff from rewriting. These files should be opened directly
+RewriteRule \.(css|js|png|gif|jpg|htm|html)$ - [L]
+RewriteRule ^install/installer.php$ - [L]
+RewriteRule ^upload_file.php$ - [L]
+RewriteRule ^get_file.php$ - [L]
+
+# If a file is requested, that is not existing, redirect to index.php
+RewriteCond %{REQUEST_URI} !-f
+RewriteCond %{REQUEST_URI} !-d
 RewriteRule . index.php
+

@@ -35,8 +35,8 @@ error_reporting(E_ALL); // error handling in development environment.
 
 
 // RELEASE NOTES ---------------------------------------------------------
-$core_config['release']['version'] = 					"Alpha 0.2";
-$core_config['release']['release_date'] = 				"09-22-2008"; // MM-DD-YYYY
+$core_config['release']['version'] = 					"Alpha 0.3.gbrockhaus";
+$core_config['release']['release_date'] = 				"03-28-2012"; // MM-DD-YYYY
 $core_config['release']['install_date'] = 				"";
 
 

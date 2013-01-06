@@ -120,10 +120,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 							<td><?php echo $value['result']; ?></td>
 							<td><?php
 								if (empty($value['is_valid'])) {
+								    echo '<span style="color:#FF0000;">';
 									echo _("FAILED");
+								    echo '</span>';
 								}
 								else {
-									echo _("PASSED");
+								    echo '<span style="color:#009900;">';
+								    echo _("PASSED");
+								    echo '</span>';
 								}
 								?>
 							</td>
@@ -276,7 +280,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	
 				<p>
 					<label for="id_database_password"><?php echo _("Password");?></label>
-					<input type="text" name="database_password" id="id_database_password" value="<?php if (isset($core_config['db']['pass'])) { echo $core_config['db']['pass'];}?>" />
+					<input type="password" name="database_password" id="id_database_password" value="<?php if (isset($core_config['db']['pass'])) { echo $core_config['db']['pass'];}?>" />
 				</p>
 	
 				<p>
@@ -331,7 +335,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 			
 				<p>
 					<label for="id_email_smtp_password"><?php echo _("Password");?></label>
-					<input type="text" name="smtp_password" id="id_email_smtp_password" value="<?php if (isset($core_config['mail']['smtp']['password'])) { echo $core_config['mail']['smtp']['password'];}?>" />
+					<input type="password" name="smtp_password" id="id_email_smtp_password" value="<?php if (isset($core_config['mail']['smtp']['password'])) { echo $core_config['mail']['smtp']['password'];}?>" />
 				</p>
 
 				<p class="note">
