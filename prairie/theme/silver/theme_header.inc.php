@@ -26,4 +26,5 @@ $font = "DejaVuSans-ExtraLight.ttf";
 $color = "#666666";
 $background_color = "#FFFFFF";
 $font_size = 40;
+
 ?>

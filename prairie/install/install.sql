@@ -4,6 +4,7 @@
 -- Copyright (C) 2003-2008 Barnraiser
 -- http:--www.barnraiser.org/
 -- info@barnraiser.org
+-- changes to extend the model done by Ole Kristian Ek Hornnes, www.nett-tech.com
 -- 
 -- This program is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -21,7 +22,9 @@
 -------------------------------------------------------------------------
 
 
--- Table structure for table `prairie_session`
+-- -----------------------------------------------------
+-- Table `prairie_session`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `prairie_session` (
   `assoc_handle` varchar(200) NOT NULL default '',
   `assoc_type` varchar(200) default NULL,
@@ -34,7 +37,9 @@ CREATE TABLE IF NOT EXISTS `prairie_session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Table structure for table `prairie_trust`
+-- -----------------------------------------------------
+-- Table `prairie_trust`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `prairie_trust` (
   `trust_id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
@@ -45,23 +50,37 @@ CREATE TABLE IF NOT EXISTS `prairie_trust` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
--- Table structure for table `prairie_user`
-CREATE TABLE IF NOT EXISTS `prairie_user` (
-  `user_id` int(11) NOT NULL auto_increment,
-  `openid_name` varchar(100) NOT NULL,
-  `user_name` varchar(255) NOT NULL,
-  `user_password` varchar(255) NOT NULL,
-  `user_email` varchar(255) NOT NULL,
-  `user_location` varchar(255) NOT NULL,
-  `user_dob` date NOT NULL,
-  `user_registration_key` varchar(100) default NULL,
-  `user_live` int(1) NOT NULL default '0',
-  `user_create_datetime` datetime NOT NULL,
-  PRIMARY KEY  (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+-- -----------------------------------------------------
+-- Table `prairie_user`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `prairie_user` (
+  `user_id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `openid_name` VARCHAR(100) NOT NULL ,
+  `user_name` VARCHAR(255) NOT NULL ,
+  `user_password` VARCHAR(255) NOT NULL ,
+  `user_email` VARCHAR(255) NOT NULL ,
+  `user_location` VARCHAR(255) NOT NULL ,
+  `user_dob` DATE NOT NULL ,
+  `user_registration_key` VARCHAR(100) NULL DEFAULT NULL ,
+  `user_live` INT(1) NOT NULL DEFAULT '0' ,
+  `user_create_datetime` DATETIME NOT NULL ,
+  `user_nick` VARCHAR(45) NULL DEFAULT NULL ,
+  `user_gender` VARCHAR(10) NULL DEFAULT NULL ,
+  `user_postcode` VARCHAR(45) NULL DEFAULT NULL ,
+  `user_country` VARCHAR(45) NULL DEFAULT NULL ,
+  `user_language` VARCHAR(45) NULL DEFAULT NULL ,
+  `user_timezone` VARCHAR(45) NULL DEFAULT NULL ,
+  `user_bio` TEXT NULL DEFAULT NULL ,
+  `user_birthdate` DATE NOT NULL ,
+  PRIMARY KEY (`user_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
--- Table structure for table `prairie_webspace`
+
+-- -----------------------------------------------------
+-- Table `prairie_webspace`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `prairie_webspace` (
   `user_id` int(11) NOT NULL,
   `webspace_title` varchar(100) default NULL,
@@ -69,5 +88,20 @@ CREATE TABLE IF NOT EXISTS `prairie_webspace` (
   `webspace_css` text NOT NULL,
   `webspace_theme` varchar(50) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------
+-- Table `prairie_articles`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `prairie_articles` (
+  `art_id` INT NOT NULL AUTO_INCREMENT ,
+  `user_id` INT NOT NULL ,
+  `art_Title` VARCHAR(100) NULL ,
+  `art_html` TEXT NOT NULL ,
+  `art_menutext` VARCHAR(45) NOT NULL ,
+  `art_order` INT NULL ,
+  PRIMARY KEY (`art_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
 
 -- ENDS

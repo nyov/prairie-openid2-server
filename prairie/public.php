@@ -21,6 +21,8 @@
 // along with this program; see the file COPYING.txt.  If not, see
 // <http://www.gnu.org/licenses/>
 // -----------------------------------------------------------------------
+include_once ("config/core.config.php");
+include_once ("inc/functions.inc.php");
 
 if (isset($_POST['send_email'])) {
 	if (empty($_POST['email'])) {

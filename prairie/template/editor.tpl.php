@@ -83,7 +83,7 @@
 
 <div id="col_right">
 	<form method="post">
-	<div class="box" id="box_html">
+	<div class="box2" id="box_html">
 		<div class="box_header">
 			<h1><?php echo _("Content markup");?></h1>
 		</div>
@@ -91,14 +91,37 @@
 		<div class="box_body">
 			<p>
 				<label for="id_html"><?php echo _("HTML");?></label>
-				<textarea id="id_html" name="html"><?php if (isset($webspace['webspace_html'])) echo $webspace['webspace_html']; ?></textarea>
-			</p>
+				<textarea id="id_html" name="html" class="mceEditor"><?php if (isset($webspace['webspace_html'])) echo $webspace['webspace_html']; ?></textarea>
+				<script  type="text/javascript">
+				tinyMCE.init({
+			// General options
+			mode : "specific_textareas",
+			editor_selector : "mceEditor",
+			theme : "advanced",
+			plugins : "safari,spellchecker,pagebreak,style,table,Archiv,advlink,advimage,emotions,preview,searchreplace,contextmenu,paste,fullscreen",
+				Archiv_settings_file : "/var/www/openid/web/tiny_mce/plugins/Archiv/config.php",
+			    theme_advanced_buttons1_add : "Archiv_files,Archiv_images",
+
+			// Theme options
+			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+			theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+			theme_advanced_buttons4 : "moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_toolbar_align : "left",
+			theme_advanced_statusbar_location : "bottom",
+			theme_advanced_resizing : true
 			
+		});
+				</script>
+				
+			</p>
+<!-- 	Remove the css field due to end-user usability. The CSS are handled by the tiny_mce		
 			<p>
 				<label for="id_css"><?php echo _("CSS");?></label>
 				<textarea id="id_css" name="css"><?php if (isset($webspace['webspace_css'])) echo $webspace['webspace_css']; ?></textarea>
 			</p>
-			
+ -->			
 			<p class="buttons">
 				<input type="submit" name="save_markup" value="<?php echo _("save");?>" />
 			</p>

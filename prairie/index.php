@@ -42,7 +42,6 @@ session_start();
 // SETUP URL ROUTING ------------------------------------------------
 $uri_routing = routeURL();
 
-
 if (isset($uri_routing[0]) && $uri_routing[0] == "disconnect") {
 	session_unset();
 	session_destroy();
@@ -99,7 +98,6 @@ elseif (!empty($core_config['script']['multiple_webspace_pattern'])) { // using 
 		$user_webspace = $matches[1];
 	}
 }
-
 if (isset($user_webspace)) {
 
 	// SELECT WEBSPACE -------------------------------------------
@@ -114,13 +112,13 @@ if (isset($user_webspace)) {
 	;
 	
 	$result = $db->Execute($query, 1);
-	
 	if (!empty($result[0]) && $result[0]['user_live'] == 1) {
 
 		$webspace = $result[0];
 
 		define("WEBSPACE_OPENID", $webspace['openid_name']);
 		define("WEBSPACE_USERID", $webspace['user_id']);
+		define("WEBSPACE_USERNAME", $webspace['user_name']); 
 		
 		if (!empty($webspace['webspace_title'])) {
 			$tpl->set('webspace_title', $webspace['webspace_title']);
@@ -141,19 +139,43 @@ if (isset($user_webspace)) {
 		if (in_array(WEBSPACE_OPENID, $maintainer_openids)) {
 			define("USER_IS_MAINTAINER", 1);
 		}
+		
+		// check if called from consumer : Do not log in if allready logged on before. 
+		if (isset($uri_routing[0]) && ($uri_routing[0]=="login")) {
+			$openid_mode = GetFromURL("openid_mode"); 
+			
+			if ($openid_mode) 
+			{
+				if (!empty($_SESSION['user_id'])) {
+					$uri_routing[0]="trust"; 
+				} else {
+					
+					if ($openid_mode=="checkid_immediate") {
+						$openid_return_to = GetFromURL("openid_return_to");
+						if (strpos($openid_return_to, '?')) $s = '&'; else $s = '?';
+					
+						$data_to_send = Array ();
+						$data_to_send['openid.ns'] = 'http://specs.openid.net/auth/2.0';
+						$data_to_send['openid.mode'] = 'setup_needed';
+						$data_to_send['openid.user_setup_url'] = 'http://'.$_SERVER['SERVER_NAME'] . '/login';
+					
+						header('location: ' . $openid_return_to . $s . http_build_query($data_to_send));
+						exit;
+					}
+						
+				}			
+					
+			}
+		} 	
 	}
 	elseif (!empty($result[0]) && $result[0]['user_live'] != 1 && isset($uri_routing[1])) {
 		// We are answering the registration confirmation email
 		$uri_routing[0] = "register";
 	}
-	else {
+	elseif ((!isset($uri_routing[0])) || ($uri_routing[0] != "register")) {	 
 		$uri_routing[0] = "public";
-	}
+	} 
 }
-elseif (!isset($uri_routing[0]) || $uri_routing[0] != "register") {
-	$uri_routing[0] = "public";
-}
-
 
 // SETUP THEME ---------------------------------------------------------
 if (!empty($webspace['webspace_theme'])) {
@@ -165,7 +187,7 @@ else {
 
 define("SCRIPT_THEME_PATH", "theme/" . SCRIPT_THEME_NAME . "/");
 
-
+require_once (SCRIPT_THEME_PATH . "theme_functions.php"); 
 
 // OBTAIN SCRIPT NAME --------------------------------------------------
 if (isset($uri_routing[0]) && is_readable(SCRIPT_TEMPLATE_PATH . $uri_routing[0] . '.tpl.php')) {
@@ -174,7 +196,7 @@ if (isset($uri_routing[0]) && is_readable(SCRIPT_TEMPLATE_PATH . $uri_routing[0]
 else {
 	define("SCRIPT_NAME", 'profile');
 }
-
+// echo SCRIPT_NAME;// debug
 if (defined('SCRIPT_NAME') && is_readable(SCRIPT_NAME . '.php')) {
 	require_once(SCRIPT_NAME . '.php');
 	$inner_template_body = file_get_contents(SCRIPT_TEMPLATE_PATH . SCRIPT_NAME . '.tpl.php');
